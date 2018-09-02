@@ -106,7 +106,7 @@ def main():
         env,
         batch_size=64,
         num_episodes=parsed_args.num_episodes,
-        checkpoint_freq=parsed_args.num_episodes // 10,
+        checkpoint_freq=parsed_args.num_episodes // 5,
         discount_factor=0.95
     )
 
