@@ -1,7 +1,7 @@
 import pprint
 import random
 import time
-
+import os
 import numpy as np
 import pandas as pd
 
@@ -48,8 +48,6 @@ class Environment(object):
     @property
     def observation_shape(self):
         """ Get the shape of the state observed at each timestep. """
-        print("////////////////////")
-        print(self.field.size)
         return self.field.size, self.field.size
 
     @property
@@ -82,15 +80,17 @@ class Environment(object):
         """ Record environment statistics according to the verbosity level. """
         timestamp = time.strftime('%Y%m%d-%H%M%S')
 
+        os.makedirs("models/attempt1/sheets/", exist_ok=True)
+
         # Write CSV header for the stats file.
         if self.verbose >= 1 and self.stats_file is None:
-            self.stats_file = open(f'snake-env-{timestamp}.csv', 'w')
+            self.stats_file = open(f'models/attempt1/sheets/snake-env-{timestamp}.csv', 'w')
             stats_csv_header_line = self.stats.to_dataframe()[:0].to_csv(index=None)
             print(stats_csv_header_line, file=self.stats_file, end='', flush=True)
 
         # Create a blank debug log file.
         if self.verbose >= 2 and self.debug_file is None:
-            self.debug_file = open(f'snake-env-{timestamp}.log', 'w')
+            self.debug_file = open(f'models/attempt1/sheets/snake-env-{timestamp}.log', 'w')
 
         self.stats.record_timestep(self.current_action, result)
         self.stats.timesteps_survived = self.timestep_index
