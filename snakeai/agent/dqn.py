@@ -51,7 +51,7 @@ class DeepQNetworkAgent(AgentBase):
         return np.expand_dims(self.frames, 0)
 
     def train(self, env, num_episodes=1000, batch_size=50, discount_factor=0.9, checkpoint_freq=None,
-              exploration_range=(1.0, 0.1), exploration_phase_size=0.5):
+              exploration_range=(.3, 0.1), exploration_phase_size=0.5):
         """
         Train the agent to perform well in the given Snake environment.
         
@@ -120,7 +120,7 @@ class DeepQNetworkAgent(AgentBase):
                     inputs, targets = batch
                     loss += float(self.model.train_on_batch(inputs, targets))
 
-            dirname = "./models/attempt0/"
+            dirname = "./models/attempt3/"
 
             os.makedirs(os.path.dirname(dirname), exist_ok=True)
 
