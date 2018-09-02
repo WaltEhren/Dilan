@@ -21,6 +21,5 @@ play-human:
 	./play.py --interface gui --agent human --level $(LEVEL) --num-episodes 1
 
 # Files to modify:
-# train
 # dqn
 # environments

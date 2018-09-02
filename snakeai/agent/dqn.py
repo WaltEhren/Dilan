@@ -125,7 +125,7 @@ class DeepQNetworkAgent(AgentBase):
             os.makedirs(os.path.dirname(dirname), exist_ok=True)
 
             if checkpoint_freq and (episode % checkpoint_freq) == 0:
-                self.model.save(f'./models/attempt1/dqn-{episode:08d}-{self.model.input_shape[2]}x{self.model.input_shape[2]}.model')
+                self.model.save(f'{dirname}/dqn-{episode:08d}-{self.model.input_shape[2]}x{self.model.input_shape[2]}.model')
 
             if exploration_rate > min_exploration_rate:
                 exploration_rate -= exploration_decay
