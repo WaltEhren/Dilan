@@ -1,7 +1,7 @@
 .PHONY: deps test train play play-gui play-human
 
 LEVEL="snakeai/levels/20x20-blank.json"
-WEIGHTS="models/attempt3/dqn-weights-00000000-10x10.model"
+WEIGHTS="models/attempt3-20x20/dqn-weights-00000000-10x10.model"
 
 deps:
 	python3.6 -m pip install --upgrade -r requirements.txt

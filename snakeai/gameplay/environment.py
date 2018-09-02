@@ -79,8 +79,8 @@ class Environment(object):
     def record_timestep_stats(self, result):
         """ Record environment statistics according to the verbosity level. """
         timestamp = time.strftime('%Y%m%d-%H%M%S')
-    
-        dirname = "models/attempt3/sheets"
+
+        dirname = "models/attempt3-20x20/sheets"
 
         os.makedirs(dirname, exist_ok=True)
 
