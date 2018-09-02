@@ -80,7 +80,7 @@ class Environment(object):
         """ Record environment statistics according to the verbosity level. """
         timestamp = time.strftime('%Y%m%d-%H%M%S')
 
-        os.makedirs("models/attempt1/sheets/", exist_ok=True)
+        os.makedirs("models/attempt2-20x20/sheets/", exist_ok=True)
 
         # Write CSV header for the stats file.
         if self.verbose >= 1 and self.stats_file is None:

@@ -120,7 +120,7 @@ class DeepQNetworkAgent(AgentBase):
                     inputs, targets = batch
                     loss += float(self.model.train_on_batch(inputs, targets))
 
-            dirname = "./models/attempt1/"
+            dirname = "./models/attempt2-20x20/"
 
             os.makedirs(os.path.dirname(dirname), exist_ok=True)
 
