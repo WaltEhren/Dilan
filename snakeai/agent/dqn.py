@@ -120,12 +120,13 @@ class DeepQNetworkAgent(AgentBase):
                     inputs, targets = batch
                     loss += float(self.model.train_on_batch(inputs, targets))
 
-            dirname = "./models/attempt2-20x20/"
+            dirname = "./models/attempt0/"
 
             os.makedirs(os.path.dirname(dirname), exist_ok=True)
 
             if checkpoint_freq and (episode % checkpoint_freq) == 0:
                 self.model.save(f'{dirname}/dqn-{episode:08d}-{self.model.input_shape[2]}x{self.model.input_shape[2]}.model')
+                self.model.save_weights(f'{dirname}/dqn-weights-{episode:08d}-{self.model.input_shape[2]}x{self.model.input_shape[2]}.model')
 
             if exploration_rate > min_exploration_rate:
                 exploration_rate -= exploration_decay

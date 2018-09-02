@@ -35,6 +35,11 @@ def parse_command_line_args(args):
         default=30000,
         help='The number of episodes to run consecutively.',
     )
+    parser.add_argument(
+        '--model',
+        required=False,
+        type=str
+    )
 
     return parser.parse_args(args)
 
@@ -47,6 +52,40 @@ def create_snake_environment(level_filename):
 
     return Environment(config=env_config, verbose=1)
 
+def load_dqn_model(env, modelPath, num_last_frames):
+    """ Load existing model """
+
+    model = Sequential()
+
+    # Convolutions.
+    model.add(Conv2D(
+        16,
+        kernel_size=(3, 3),
+        strides=(1, 1),
+        data_format='channels_first',
+        input_shape=(num_last_frames,) + env.observation_shape
+    ))
+    model.add(Activation('relu'))
+    model.add(Conv2D(
+        32,
+        kernel_size=(3, 3),
+        strides=(1, 1),
+        data_format='channels_first'
+    ))
+    model.add(Activation('relu'))
+
+    # Dense layers.
+    model.add(Flatten())
+    model.add(Dense(256))
+    model.add(Activation('relu'))
+    model.add(Dense(env.num_actions))
+
+    model.summary()
+    model.compile(RMSprop(), 'MSE')
+
+    model.load_weights(modelPath)
+
+    return model
 
 def create_dqn_model(env, num_last_frames):
     """
@@ -94,10 +133,15 @@ def create_dqn_model(env, num_last_frames):
 def main():
     parsed_args = parse_command_line_args(sys.argv[1:])
 
-    print(parsed_args)
-
     env = create_snake_environment(parsed_args.level)
-    model = create_dqn_model(env, num_last_frames=4)
+
+    if parsed_args.model != None :
+        print("-> Resumed training model")
+        model = load_dqn_model(env, parsed_args.model, num_last_frames=4)
+    else :
+        print("-> Start training new model")
+        model = create_dqn_model(env, num_last_frames=4)
+
 
     agent = DeepQNetworkAgent(
         model=model,
