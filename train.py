@@ -94,6 +94,8 @@ def create_dqn_model(env, num_last_frames):
 def main():
     parsed_args = parse_command_line_args(sys.argv[1:])
 
+    print(parsed_args)
+
     env = create_snake_environment(parsed_args.level)
     model = create_dqn_model(env, num_last_frames=4)
 

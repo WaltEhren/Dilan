@@ -11,6 +11,9 @@ test:
 train:
 	./train.py --level $(LEVEL) --num-episodes 90000
 
+train-model:
+
+
 play:
 	./play.py --interface cli --agent dqn --model ./models/dqn-final.model --level $(LEVEL) --num-episodes 100
 
