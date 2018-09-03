@@ -1,0 +1,2 @@
+x fix git
+x automate training
