@@ -28,6 +28,8 @@ class DeepQNetworkAgent(AgentBase):
         self.memory = ExperienceReplay((num_last_frames,) + model.input_shape[-2:], model.output_shape[-1], memory_size)
         self.frames = None
 
+        self.iFrequency = 0
+
     def begin_episode(self):
         """ Reset the agent for a new episode. """
         self.frames = None
@@ -120,13 +122,18 @@ class DeepQNetworkAgent(AgentBase):
                     inputs, targets = batch
                     loss += float(self.model.train_on_batch(inputs, targets))
 
-            dirname = "./models/attempt3-20x20/"
+            dirname = "./models/attempt4-15x15/"
 
             os.makedirs(os.path.dirname(dirname), exist_ok=True)
 
-            if checkpoint_freq and (episode % checkpoint_freq) == 0:
+            self.iFrequency += 1
+
+            # if checkpoint_freq and (episode % checkpoint_freq) == 0:
+
+            if self.iFrequency == 1000:
                 self.model.save(f'{dirname}/dqn-{episode:08d}-{self.model.input_shape[2]}x{self.model.input_shape[2]}.model')
                 self.model.save_weights(f'{dirname}/dqn-weights-{episode:08d}-{self.model.input_shape[2]}x{self.model.input_shape[2]}.model')
+                self.iFrequency = 0;
 
             if exploration_rate > min_exploration_rate:
                 exploration_rate -= exploration_decay
