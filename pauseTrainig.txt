@@ -1,0 +1,10 @@
+1. Pause process via:
+	ctrl + z
+
+2. Hibernate via
+	systemctl suspend
+
+3. Wake up
+
+4. Rerun process via 
+	% + RETURN
