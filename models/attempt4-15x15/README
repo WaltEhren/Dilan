@@ -1,0 +1,8 @@
+Start training on 3.Sep 14:06
+Level: 15x15
+
+Rewards:
+	Food +1, Step 0, Death -1
+
+Try to load weights in the following attempt. Watch out for exploration rate.
+Tweak rewards if loading is possible
