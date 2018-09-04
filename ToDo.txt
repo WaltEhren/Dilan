@@ -1,2 +1,4 @@
 x fix git
 x automate training
+x find a way top comare all models
+x read keras docu about models and weights

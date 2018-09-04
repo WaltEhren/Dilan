@@ -80,7 +80,7 @@ class Environment(object):
         """ Record environment statistics according to the verbosity level. """
         timestamp = time.strftime('%Y%m%d-%H%M%S')
 
-        dirname = "models/attempt8-57000/sheets"
+        dirname = "models/attempt9-70000/sheets"
 
         os.makedirs(dirname, exist_ok=True)
 
