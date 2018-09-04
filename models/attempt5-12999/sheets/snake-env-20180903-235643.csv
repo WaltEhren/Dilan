@@ -1,4 +1,0 @@
-action_counter_0,action_counter_1,action_counter_2,fruits_eaten,mean_reward,sum_episode_rewards,termination_reason,timesteps_survived
-12,2,9,2,0.34782608695652173,8,hit_own_body,23
-63,10,3,2,0.10526315789473684,8,hit_wall,76
-6,2,992,0,0.0,0,timestep_limit_exceeded,1000
