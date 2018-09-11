@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# IMPORTANT:
+# MakeFile always loads the newest model because of same name
+# find better way than touch file to remember num of episodes
+# Number os episodes * iter is current episode count
+
+iter=5
+newAttempt=true
+
+if $newAttempt ; then
+    make train
+    # touch /models/attempt10/plusXEpisodes0
+    echo '--------------------'
+    echo ''
+fi
+
+for i in $(seq 1 5);
+do
+    make train-model
+    # touch /models/attempt10/plusXEpisodes$i
+    echo '---------------------'
+    echo '~~~ sleeping ~~~'
+    sleep 5
+    echo ''
+    echo '~~~waking up ~~~'
+done
+
+echo "--- finished training ---"

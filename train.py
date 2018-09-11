@@ -13,6 +13,8 @@ from snakeai.agent import DeepQNetworkAgent
 from snakeai.gameplay.environment import Environment
 from snakeai.utils.cli import HelpOnFailArgumentParser
 
+import snakeai.parameters as para
+
 
 def parse_command_line_args(args):
     """ Parse command-line arguments and organize them into a single structured object. """
@@ -136,10 +138,10 @@ def main():
     env = create_snake_environment(parsed_args.level)
 
     if parsed_args.model != None :
-        print("-> Resumed training model")
+        print("---> Resumed training model")
         model = load_dqn_model(env, parsed_args.model, num_last_frames=4)
     else :
-        print("-> Start training new model")
+        print("---> Start training new model")
         model = create_dqn_model(env, num_last_frames=4)
 
 
@@ -153,7 +155,8 @@ def main():
         batch_size=64,
         num_episodes=parsed_args.num_episodes,
         checkpoint_freq=parsed_args.num_episodes // 10,
-        discount_factor=0.95
+        discount_factor=0.95,
+        exploration_range=para.explorationRate
     )
 
 
