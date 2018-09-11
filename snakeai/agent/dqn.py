@@ -7,6 +7,8 @@ import errno
 from snakeai.agent import AgentBase
 from snakeai.utils.memory import ExperienceReplay
 
+import snakeai.parameters as para
+
 
 class DeepQNetworkAgent(AgentBase):
     """ Represents a Snake agent powered by DQN with experience replay. """
@@ -29,6 +31,8 @@ class DeepQNetworkAgent(AgentBase):
         self.frames = None
 
         self.iFrequency = 0
+
+        self.dirname = para.dirname
 
     def begin_episode(self):
         """ Reset the agent for a new episode. """
@@ -53,7 +57,7 @@ class DeepQNetworkAgent(AgentBase):
         return np.expand_dims(self.frames, 0)
 
     def train(self, env, num_episodes=1000, batch_size=50, discount_factor=0.9, checkpoint_freq=None,
-              exploration_range=(.2, 0.1), exploration_phase_size=0.5):
+              exploration_range=(1.0, 0.1), exploration_phase_size=0.5):
         """
         Train the agent to perform well in the given Snake environment.
         
@@ -122,21 +126,17 @@ class DeepQNetworkAgent(AgentBase):
                     inputs, targets = batch
                     loss += float(self.model.train_on_batch(inputs, targets))
 
-            dirname = "./models/attempt9-70000/"
-
-            os.makedirs(os.path.dirname(dirname), exist_ok=True)
-
-            self.iFrequency += 1
-
             # if checkpoint_freq and (episode % checkpoint_freq) == 0:
 
-            if self.iFrequency == 1000:
-                self.model.save(f'{dirname}/dqn-{episode:08d}-{self.model.input_shape[2]}x{self.model.input_shape[2]}.model')
-                self.model.save_weights(f'{dirname}/dqn-weights-{episode:08d}-{self.model.input_shape[2]}x{self.model.input_shape[2]}.model')
-                self.iFrequency = 0;
+            if self.iFrequency == 0:
+                os.makedirs(os.path.dirname(self.dirname), exist_ok=True)
+                self.model.save(f'{self.dirname}/dqn-{episode:08d}-{self.model.input_shape[2]}x{self.model.input_shape[2]}.model')
+                self.iFrequency = 1000;
 
             if exploration_rate > min_exploration_rate:
                 exploration_rate -= exploration_decay
+
+            self.iFrequency -= 1
 
             summary = 'Episode {:5d}/{:5d} | Loss {:8.4f} | Exploration {:.2f} | ' + \
                       'Fruits {:2d} | Timesteps {:4d} | Total Reward {:4d}'
@@ -146,6 +146,9 @@ class DeepQNetworkAgent(AgentBase):
             ))
 
         self.model.save('dqn-final.model')
+        # self.model.save_weights(f'{self.dirname}/dqn-weights-{episode+1:08d}-{self.model.input_shape[2]}x{self.model.input_shape[2]}.model')
+        self.model.save_weights(f'{self.dirname}/dqn-weights-{self.model.input_shape[2]}x{self.model.input_shape[2]}.model')
+
 
     def act(self, observation, reward):
         """

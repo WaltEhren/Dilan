@@ -4,6 +4,7 @@ import time
 import os
 import numpy as np
 import pandas as pd
+import snakeai.parameters as para
 
 from .entities import Snake, Field, CellType, SnakeAction, ALL_SNAKE_ACTIONS
 
@@ -39,6 +40,9 @@ class Environment(object):
         self.verbose = verbose
         self.debug_file = None
         self.stats_file = None
+
+        self.dirname = para.dirname + "sheets"
+
 
     def seed(self, value):
         """ Initialize the random state of the environment to make results reproducible. """
@@ -80,19 +84,19 @@ class Environment(object):
         """ Record environment statistics according to the verbosity level. """
         timestamp = time.strftime('%Y%m%d-%H%M%S')
 
-        dirname = "models/attempt9-70000/sheets"
-
-        os.makedirs(dirname, exist_ok=True)
-
         # Write CSV header for the stats file.
         if self.verbose >= 1 and self.stats_file is None:
-            self.stats_file = open(f'{dirname}/snake-env-{timestamp}.csv', 'w')
+            os.makedirs(self.dirname, exist_ok=True)
+
+            self.stats_file = open(f'{self.dirname}/snake-env-{timestamp}.csv', 'w')
             stats_csv_header_line = self.stats.to_dataframe()[:0].to_csv(index=None)
             print(stats_csv_header_line, file=self.stats_file, end='', flush=True)
 
         # Create a blank debug log file.
         if self.verbose >= 2 and self.debug_file is None:
-            self.debug_file = open(f'{dirname}/snake-env-{timestamp}.log', 'w')
+            os.makedirs(self.dirname, exist_ok=True)
+
+            self.debug_file = open(f'{self.dirname}/snake-env-{timestamp}.log', 'w')
 
         self.stats.record_timestep(self.current_action, result)
         self.stats.timesteps_survived = self.timestep_index
