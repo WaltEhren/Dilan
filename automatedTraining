@@ -15,13 +15,13 @@ if $newAttempt ; then
     echo ''
 fi
 
-for i in $(seq 1 5);
+for i in $(seq 1 20);
 do
     make train-model
     # touch /models/attempt10/plusXEpisodes$i
     echo '---------------------'
     echo '~~~ sleeping ~~~'
-    sleep 5
+    sleep 300
     echo ''
     echo '~~~waking up ~~~'
 done
