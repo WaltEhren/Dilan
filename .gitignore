@@ -1,2 +1,5 @@
-./models/*
-./snakeai/*__pycache__*
+./models/
+./snakeai/agent/__pycache__/
+./snakeai/gameplay/__pycache__/
+./snakeai/gui/__pycache__/
+
